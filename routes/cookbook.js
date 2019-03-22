@@ -33,4 +33,35 @@ router.get("/recipes", async (req, res) => {
   }
 });
 
+router.post("/recipes", async (req, res) => {
+  const { rec_name } = req.body;
+  const recipe = req.body;
+  console.log(recipe);
+  try {
+    if (rec_name) {
+      const new_recipe = await db.add_recipe(recipe);
+      res.status(201).json(new_recipe);
+    } else {
+      res.status(400).json({ Error: "The name is require" });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.post("/dishes", async (req, res) => {
+  const { dish_name } = req.body;
+  const dish = req.body;
+  try {
+    if (dish_name) {
+      const new_dish = await db.add_dish(dish);
+      res.status(201).json(new_dish);
+    } else {
+      res.status(400).json({ Error: "The name is required" });
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
